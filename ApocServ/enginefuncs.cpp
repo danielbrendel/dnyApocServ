@@ -293,6 +293,7 @@ bool Cmd_Help(edict_s* pEntity)
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_healthcare <0/1> //Enable or disable health care\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_gravity <value> //Set your gravity value\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_getitem <item> //Get an item by class name\n");
+			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_spawnzone <zone> //Spawn a zone entity (buy, bomb, hostage)\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_traceaim <0/1> //Enable or disable traceline hitbot\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_launchrocket //Launches a rocket\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_startmortar <player> //Starts the mortar\n");
@@ -485,6 +486,35 @@ bool Cmd_GetItem(edict_s* pEntity)
 //======================================================================
 
 //======================================================================
+bool Cmd_SpawnZone(edict_s* pEntity)
+{
+	//Called for command: "ssh_spawnzone"
+
+	playerinfo_s* pPlayer = gPlayers.GetPlayerByEdict(pEntity);
+	if ((pPlayer) && (pPlayer->bAuthed)) {
+		const char* zone = g_pEngFuncs->pfnCmd_Argv(1);
+		if (strcmp(zone, "buy") == 0) {
+			SpawnZone("func_buyzone", pPlayer->pEnt->v.origin);
+
+			return true;
+		} else if (strcmp(zone, "bomb") == 0) {
+			SpawnZone("func_bomb_target", pPlayer->pEnt->v.origin);
+
+			return true;
+		} else if (strcmp(zone, "hostage") == 0) {
+			SpawnZone("func_hostage_rescue", pPlayer->pEnt->v.origin);
+
+			return true;
+		} else {
+			g_EngBackup.pfnClientPrintf(pEntity, print_console, std::string("Invalid zone specified: \"" + std::string(zone) + "\"\n").c_str());
+		}
+	}
+
+	return false;
+}
+//======================================================================
+
+//======================================================================
 bool Cmd_TraceAim(edict_s* pEntity)
 {
 	//Called for command: "ssh_traceaim"
@@ -648,6 +678,7 @@ void new_pfnServerActivate(edict_s *pEdictList, int edictCount, int clientMax)
 	gClientCmd.AddHandler(&Cmd_HealthCare, "ssh_healthcare");
 	gClientCmd.AddHandler(&Cmd_RocketLauncher, "ssh_launchrocket");
 	gClientCmd.AddHandler(&Cmd_GetItem, "ssh_getitem");
+	gClientCmd.AddHandler(&Cmd_SpawnZone, "ssh_spawnzone");
 	gClientCmd.AddHandler(&Cmd_TraceAim, "ssh_traceaim");
 	gClientCmd.AddHandler(&Cmd_Mortar, "ssh_startmortar");
 	gClientCmd.AddHandler(&Cmd_SelPlayer, "ssh_selplayer");

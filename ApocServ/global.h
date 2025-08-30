@@ -51,6 +51,7 @@ void PlayStepNearPlayer(edict_s* pEdict);
 void SlapPlayer(edict_s* pEdict, float fHealthToReduce);
 void BlindPlayer(edict_s* pEdict);
 bool SpawnItemToPlayer(edict_s* pEdict, const char* szItemName);
+bool SpawnZone(const char* szZoneName, float* pos);
 void SetPlayerGlow(edict_s* pEdict, float ramt, float fr, float fg, float fb);
 //======================================================================
 

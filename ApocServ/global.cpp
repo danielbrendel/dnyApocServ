@@ -230,7 +230,8 @@ void SlapPlayer(edict_s* pEdict, float fHealthToReduce)
 //======================================================================
 void BlindPlayer(edict_s* pEdict)
 {
-	//Make a player be blind temporarly
+	//Temporarily blind a player
+
 	if (pEdict) {
 		//Send blind message
 		g_pEngFuncs->pfnMessageBegin(MSG_ONE, 98, NULL, pEdict);
@@ -250,6 +251,7 @@ void BlindPlayer(edict_s* pEdict)
 bool SpawnItemToPlayer(edict_s* pEdict, const char* szItemName)
 {
 	//Spawn an item to player(weapons, bomb, etc)
+
 	bool bResult = false;
 
 	if ((pEdict) && (szItemName)) {
@@ -259,6 +261,30 @@ bool SpawnItemToPlayer(edict_s* pEdict, const char* szItemName)
 			if (pItem) {
 				g_pDllFuncs->pfnSpawn(pItem); //Spawn item to world
 				g_pDllFuncs->pfnTouch(pItem, pEdict); //Connect item with player
+
+				bResult = true;
+			}
+		}
+	}
+
+	return bResult;
+}
+//======================================================================
+
+//======================================================================
+bool SpawnZone(const char* szZoneName, float* pos)
+{
+	//Spawn a zone entity
+
+	bool bResult = false;
+
+	if ((szZoneName) && (pos)) {
+		int ialloc = g_pEngFuncs->pfnAllocString(szZoneName); //Allocate entity string
+		if (ialloc) {
+			edict_s* pZone = g_pEngFuncs->pfnCreateNamedEntity(ialloc); //Create the zone entity by name
+			if (pZone) {
+				g_pDllFuncs->pfnSpawn(pZone); //Spawn item to world
+				g_pEngFuncs->pfnSetOrigin(pZone, pos); //Set desired position
 
 				bResult = true;
 			}

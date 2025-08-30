@@ -14,6 +14,7 @@ This is a server-side hack for GoldSrc CS/CZ, based on SSHBase. It works both wi
 - Health care
 - Gravity
 - Item spawner
+- Zone spawner (buy, bomb, hostage)
 - Trace-aim
 - Rocket launcher
 - Mortar
