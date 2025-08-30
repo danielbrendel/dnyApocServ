@@ -840,7 +840,7 @@ void new_pfnServerActivate(edict_s *pEdictList, int edictCount, int clientMax)
 
 	//Load all SteamID profile configs
 	gPlayers.LoadAllSteamIDConfigs(SSH_CONFIG);
-
+	
 	//Add client command handlers
 	gClientCmd.AddHandler(&Cmd_Auth, "ssh_auth");
 	gClientCmd.AddHandler(&Cmd_Help, "ssh_help");

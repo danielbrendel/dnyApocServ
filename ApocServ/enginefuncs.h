@@ -14,27 +14,38 @@
 #include "sdkinclude.h"
 #include "global.h"
 
-#define CSVER_CZERO
+#define CSVER_CSTRIKE
 
 #ifdef __linux__
 #define OPERATINGSYSTEM "Linux"
-#define SSH_CONFIG "cstrike/dlls/ApocServ.cfg"
 #define EXPORT_LIBRARY extern "C"
 #define FNPAPI
 #define ENTAPI
 #define NEWAPI
 #define INTERNAPI
+#if defined(CSVER_CSTRIKE)
+#define SSH_CONFIG "cstrike/dlls/ApocServ.cfg"
 #define LMODULE "cstrike/dlls/cs_i386.so"
+#elif defined(CSVER_CZERO)
+#define SSH_CONFIG "czero/dlls/ApocServ.cfg"
+#define LMODULE "czero/dlls/cs_i386.so"
+#endif
 #elif _WIN32
 #define OPERATINGSYSTEM "Win32"
-#define SSH_CONFIG "cstrike\\dlls\\ApocServ.cfg"
 #define EXPORT_LIBRARY
 #define FNPAPI __stdcall
 #define ENTAPI __cdecl
 #define NEWAPI __cdecl
 #define INTERNAPI __cdecl
+#if defined(CSVER_CSTRIKE)
+#define SSH_CONFIG "cstrike\\dlls\\ApocServ.cfg"
 #define LMODULE "cstrike\\dlls\\mp.dll"
 #define ZMODULE "cstrike\\dlls\\zbotcz.dll"
+#elif defined(CSVER_CZERO)
+#define SSH_CONFIG "czero\\dlls\\ApocServ.cfg"
+#define LMODULE "czero\\dlls\\mp.dll"
+#define ZMODULE "czero\\dlls\\zbotcz.dll"
+#endif
 #endif
 
 #if !defined(CSVER_CSTRIKE) && !defined(CSVER_CZERO)
