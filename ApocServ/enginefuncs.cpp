@@ -804,7 +804,7 @@ void Menu_SelectAction(edict_s* pEntity, int iSelection)
 				PlayStepNearPlayer(pTarget);
 				break;
 			case 4:
-				PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
+				g_pDllFuncs->pfnClientKill(pTarget);
 				break;
 			case 5:
 				PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
