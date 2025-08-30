@@ -266,6 +266,7 @@ bool Cmd_Auth(edict_s* pEntity)
 		if ((pPlayer) && (strcmp(sz, g_AdminPass)==0)) {
 			pPlayer->bAuthed = true;
 
+			g_pEngFuncs->pfnEmitSound(pEntity, 3, "vox/hello.wav", 1.0f, 0.8f, 0, 101);
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "Welcome to ApocServ!\nType ssh_help for more info\n");
 
 			return true;
@@ -874,6 +875,8 @@ void new_pfnServerActivate(edict_s *pEdictList, int edictCount, int clientMax)
 		gActionMenu.AddSelection("#3 Step\n");
 		gActionMenu.AddSelection("\n#0 Close\n");
 	}
+
+	g_pEngFuncs->pfnPrecacheSound((char*)"vox/hello.wav");
 	
 	INC_Precache();
 	RCK_Precache();
