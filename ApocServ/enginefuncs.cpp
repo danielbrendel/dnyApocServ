@@ -835,6 +835,13 @@ void new_pfnServerActivate(edict_s *pEdictList, int edictCount, int clientMax)
 
 	g_DllBackup.pfnServerActivate(pEdictList, edictCount, clientMax);
 
+	//Check target game mod
+	char szGameDir[MAX_PATH] = { 0 };
+	g_pEngFuncs->pfnGetGameDir(szGameDir);
+	if (strcmp(szGameDir, HLMOD) != 0) {
+		printf("Warning: Built for \"%s\", but \"%s\" found\n", HLMOD, szGameDir);
+	}
+
 	//Initialize player class
 	gPlayers.Initialize(pEdictList);
 

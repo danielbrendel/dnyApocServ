@@ -48,7 +48,11 @@
 #endif
 #endif
 
-#if !defined(CSVER_CSTRIKE) && !defined(CSVER_CZERO)
+#if defined(CSVER_CSTRIKE)
+#define HLMOD "cstrike"
+#elif defined(CSVER_CZERO)
+#define HLMOD "czero"
+#else
 #error "You need to define either CSVER_CSTRIKE or CSVER_CZERO"
 #endif
 
