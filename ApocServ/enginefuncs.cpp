@@ -264,6 +264,9 @@ bool Cmd_Auth(edict_s* pEntity)
 		playerinfo_s* pPlayer = gPlayers.GetPlayerByEdict(pEntity);
 		if ((pPlayer) && (strcmp(sz, g_AdminPass)==0)) {
 			pPlayer->bAuthed = true;
+
+			g_EngBackup.pfnClientPrintf(pEntity, print_console, "Welcome to ApocServ!\nType ssh_help for more info\n");
+
 			return true;
 		}
 	}
@@ -281,7 +284,7 @@ bool Cmd_Help(edict_s* pEntity)
 	if (sz) {
 		playerinfo_s* pPlayer = gPlayers.GetPlayerByEdict(pEntity);
 		if ((pPlayer) && (pPlayer->bAuthed)) {
-			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ApocServ for CS 1.6\n");
+			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ApocServ for GoldSrc CS/CZ\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "Available commands and cvars:\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_bunnyhop <0/1> //Enable or disable silent bunnyhop\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_invincible <0/1> //Enable or disable invincibility\n");
@@ -294,7 +297,7 @@ bool Cmd_Help(edict_s* pEntity)
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_launchrocket //Launches a rocket\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_startmortar <player> //Starts the mortar\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_selplayer <id> //Set target player selection\n");
-			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_cheatmenu //Shows the cheat menu to you\n");
+			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_actionmenu //Shows the action menu to you\n");
 
 			return true;
 		}
@@ -313,8 +316,14 @@ bool Cmd_Bunnyhop(edict_s* pEntity)
 	if (sz) {
 		playerinfo_s* pPlayer = gPlayers.GetPlayerByEdict(pEntity);
 		if ((pPlayer) && (pPlayer->bAuthed)) {
-			//Set player cheat variable
 			pPlayer->cvars.bunnyhop = atoi(g_pEngFuncs->pfnCmd_Argv(1));
+
+			if (pPlayer->cvars.bunnyhop) {
+				g_EngBackup.pfnClientPrintf(pEntity, print_console, "Bunnyhop is now activated\n");
+			} else {
+				g_EngBackup.pfnClientPrintf(pEntity, print_console, "Bunnyhop is now deactivated\n");
+			}
+
 			return true;
 		}
 	}
@@ -337,9 +346,13 @@ bool Cmd_NoClip(edict_s* pEntity)
 			if (pPlayer->cvars.noclip) {
 				pPlayer->pEnt->v.movetype = MOVETYPE_NOCLIP;
 				pPlayer->pEnt->v.solid = SOLID_NOT;
+
+				g_EngBackup.pfnClientPrintf(pEntity, print_console, "Noclip is now activated\n");
 			} else {
 				pPlayer->pEnt->v.movetype = MOVETYPE_WALK;
 				pPlayer->pEnt->v.solid = SOLID_SLIDEBOX;
+
+				g_EngBackup.pfnClientPrintf(pEntity, print_console, "Noclip is now deactivated\n");
 			}
 
 			return true;
@@ -362,8 +375,12 @@ bool Cmd_Invincible(edict_s* pEntity)
 			pPlayer->cvars.invincibility = atoi(g_pEngFuncs->pfnCmd_Argv(1));
 			if (pPlayer->cvars.invincibility) {
 				pPlayer->pEnt->v.takedamage = DAMAGE_NO;
+
+				g_EngBackup.pfnClientPrintf(pEntity, print_console, "Invincibility is now activated\n");
 			} else {
 				pPlayer->pEnt->v.takedamage = DAMAGE_YES;
+
+				g_EngBackup.pfnClientPrintf(pEntity, print_console, "Invincibility is now deactivated\n");
 			}
 
 			return true;
@@ -385,6 +402,8 @@ bool Cmd_Gravity(edict_s* pEntity)
 		if ((pPlayer) && (pPlayer->bAuthed)) {
 			pPlayer->cvars.gravity = atof(g_pEngFuncs->pfnCmd_Argv(1));
 			pPlayer->pEnt->v.gravity = pPlayer->cvars.gravity;
+
+			g_EngBackup.pfnClientPrintf(pEntity, print_console, std::string("Individual gravity is now set to " + std::to_string(pPlayer->cvars.gravity) + "\n").c_str());
 
 			return true;
 		}
@@ -408,6 +427,8 @@ bool Cmd_SetHealth(edict_s* pEntity)
 			pPlayer->pEnt->v.max_health = health;
 			pPlayer->pEnt->v.health = health;
 
+			g_EngBackup.pfnClientPrintf(pEntity, print_console, std::string("Individual health is now set to " + std::to_string(pPlayer->cvars.maxhealth) + "\n").c_str());
+
 			return true;
 		}
 	}
@@ -426,6 +447,12 @@ bool Cmd_HealthCare(edict_s* pEntity)
 		playerinfo_s* pPlayer = gPlayers.GetPlayerByEdict(pEntity);
 		if ((pPlayer) && (pPlayer->bAuthed)) {
 			pPlayer->cvars.healthcare = atoi(g_pEngFuncs->pfnCmd_Argv(1));
+
+			if (pPlayer->cvars.healthcare) {
+				g_EngBackup.pfnClientPrintf(pEntity, print_console, "Healthcare is now activated\n");
+			} else {
+				g_EngBackup.pfnClientPrintf(pEntity, print_console, "Healthcare is now deactivated\n");
+			}
 
 			return true;
 		}
@@ -447,6 +474,8 @@ bool Cmd_GetItem(edict_s* pEntity)
 			const char* item = g_pEngFuncs->pfnCmd_Argv(1);
 			SpawnItemToPlayer(pPlayer->pEnt, item);
 
+			g_EngBackup.pfnClientPrintf(pEntity, print_console, std::string("Spawned and attached \"" + std::string(item) + "\" to you\n").c_str());
+
 			return true;
 		}
 	}
@@ -464,8 +493,14 @@ bool Cmd_TraceAim(edict_s* pEntity)
 	if (sz) {
 		playerinfo_s* pPlayer = gPlayers.GetPlayerByEdict(pEntity);
 		if ((pPlayer) && (pPlayer->bAuthed)) {
-			//Set player cheat variable
 			pPlayer->cvars.traceaim = atoi(g_pEngFuncs->pfnCmd_Argv(1));
+
+			if (pPlayer->cvars.traceaim) {
+				g_EngBackup.pfnClientPrintf(pEntity, print_console, "Traceaim is now activated\n");
+			} else {
+				g_EngBackup.pfnClientPrintf(pEntity, print_console, "Traceaim is now deactivated\n");
+			}
+
 			return true;
 		}
 	}
@@ -483,8 +518,8 @@ bool Cmd_RocketLauncher(edict_s* pEntity)
 	if (sz) {
 		playerinfo_s* pPlayer = gPlayers.GetPlayerByEdict(pEntity);
 		if ((pPlayer) && (pPlayer->bAuthed)) {
-			//Launch rocket
 			RCK_Create(pEntity);
+
 			return true;
 		}
 	}
@@ -502,12 +537,12 @@ bool Cmd_Mortar(edict_s* pEntity)
 	if (sz) {
 		playerinfo_s* pPlayer = gPlayers.GetPlayerByEdict(pEntity);
 		if ((pPlayer) && (pPlayer->bAuthed)) {
-			//Start mortar if not already
 			if (!INC_IsStarted()) {
 				playerinfo_s* pRemote = gPlayers.GetPlayerById(atoi(sz));
 				if ((isValidPlayer(pRemote)) && (pRemote->pEnt->v.deadflag == DEAD_NO)) {
 					INC_SetTarget(pRemote->pEnt);
 					INC_Start();
+
 					return true;
 				}
 			}
@@ -529,6 +564,8 @@ bool Cmd_SelPlayer(edict_s* pEntity)
 		if ((pPlayer) && (pPlayer->bAuthed)) {
 			pPlayer->cvars.selplayer = atoi(sz);
 
+			g_EngBackup.pfnClientPrintf(pEntity, print_console, std::string("Selected target player #" + std::to_string(pPlayer->cvars.selplayer) + "\n").c_str());
+
 			return true;
 		}
 	}
@@ -538,9 +575,9 @@ bool Cmd_SelPlayer(edict_s* pEntity)
 //======================================================================
 
 //======================================================================
-bool Cmd_CheatMenu(edict_s* pEntity)
+bool Cmd_ActionMenu(edict_s* pEntity)
 {
-	//Called for command: "ssh_cheatmenu"
+	//Called for command: "ssh_actionmenu"
 
 	const char *sz = g_pEngFuncs->pfnCmd_Argv(1);
 	if (sz) {
@@ -600,13 +637,13 @@ void new_pfnServerActivate(edict_s *pEdictList, int edictCount, int clientMax)
 	//Load all SteamID profile configs
 	gPlayers.LoadAllSteamIDConfigs(SSH_CONFIG);
 
-	//Add cheat command handlers
+	//Add client command handlers
 	gClientCmd.AddHandler(&Cmd_Auth, "ssh_auth");
 	gClientCmd.AddHandler(&Cmd_Help, "ssh_help");
 	gClientCmd.AddHandler(&Cmd_Bunnyhop, "ssh_bunnyhop");
 	gClientCmd.AddHandler(&Cmd_NoClip, "ssh_noclip");
 	gClientCmd.AddHandler(&Cmd_Invincible, "ssh_invincible");
-	gClientCmd.AddHandler(&Cmd_SetHealth, "ssh_gravity");
+	gClientCmd.AddHandler(&Cmd_Gravity, "ssh_gravity");
 	gClientCmd.AddHandler(&Cmd_SetHealth, "ssh_sethealth");
 	gClientCmd.AddHandler(&Cmd_HealthCare, "ssh_healthcare");
 	gClientCmd.AddHandler(&Cmd_RocketLauncher, "ssh_launchrocket");
@@ -614,13 +651,13 @@ void new_pfnServerActivate(edict_s *pEdictList, int edictCount, int clientMax)
 	gClientCmd.AddHandler(&Cmd_TraceAim, "ssh_traceaim");
 	gClientCmd.AddHandler(&Cmd_Mortar, "ssh_startmortar");
 	gClientCmd.AddHandler(&Cmd_SelPlayer, "ssh_selplayer");
-	gClientCmd.AddHandler(&Cmd_CheatMenu, "ssh_cheatmenu");
+	gClientCmd.AddHandler(&Cmd_ActionMenu, "ssh_actionmenu");
 
 	//Clear menu if already initialized
 	if (gActionMenu.IsReady())
 		gActionMenu.Clear();
 
-	//Initialize action cheat menu
+	//Initialize action menu
 	if (gActionMenu.Initialize("Action Menu\n", 0, &Menu_SelectAction)) {
 		gActionMenu.AddSelection("#1 Slap\n");
 		gActionMenu.AddSelection("#2 Blind\n");
@@ -901,7 +938,7 @@ void new_pfnTraceLine(const float*p1, const float*p2, int fNoMonsters, edict_s*p
 //======================================================================
 void Set_Password(void)
 {
-	//Called when setting a new cheat password
+	//Called when setting a new auth password
 
 	const char* pw = g_pEngFuncs->pfnCmd_Argv(1);
 	if (pw) {
@@ -909,7 +946,7 @@ void Set_Password(void)
 
 		//Print info into server console
 		char buf[1024];
-		sprintf(buf, "Cheat password has been set to \"%s\"\n", g_AdminPass);
+		sprintf(buf, "Auth password has been set to \"%s\"\n", g_AdminPass);
 		g_pEngFuncs->pfnServerPrint(buf);
 
 		//Remove successful auth state of each player
@@ -956,7 +993,6 @@ EXPORT_LIBRARY int ENTAPI GetEntityAPI(DLL_FUNCTIONS *pFunctionTable, int interf
 	gDllTable.Hook("pfnStartFrame", &new_pfnStartFrame);
 	gDllTable.Hook("pfnPlayerPreThink", &new_pfnPlayerPreThink);
 	gDllTable.Hook("pfnClientUserInfoChanged", &new_pfnClientUserInfoChanged);
-	// (Add more hooks here)
 
 	return 1;
 }
@@ -982,8 +1018,6 @@ EXPORT_LIBRARY int NEWAPI GetNewDLLFunctions(NEW_DLL_FUNCTIONS *pNewFunctionTabl
 	//Register aliases
 	for (unsigned int i = 0; i < sizeof(paNewDllFuncs) / sizeof(unsigned int); i++)
 		gNewDllTable.AddNewName(paNewDllFuncs[i], i);
-
-	//Add hooks here:
 
 	return orig_GetNewDLLFunctions(pNewFunctionTable, pinterfaceVersion);
 }
@@ -1022,7 +1056,6 @@ EXPORT_LIBRARY void FNPAPI GiveFnptrsToDll(enginefuncs_s *pengfuncsFromEngine, g
 	gEngTable.Hook("pfnWriteString", &new_pfnWriteString);
 	gEngTable.Hook("pfnMessageEnd", &new_pfnMessageEnd);
 	gEngTable.Hook("pfnTraceLine", &new_pfnTraceLine);
-	// (Add more hooks here)
 
 	//Load original module into memory (on windows also check for Z-Bots module)
 	#ifdef __linux__
@@ -1050,7 +1083,7 @@ EXPORT_LIBRARY void FNPAPI GiveFnptrsToDll(enginefuncs_s *pengfuncsFromEngine, g
 	orig_GetProcAddress = (T_GetProcAddress)JMPDetour(GetProcAddress(GetModuleHandleA("kernel32.dll"), "GetProcAddress"), &new_GetProcAddress, lOpLen);
 	#endif
 
-	//Add cheat command
+	//Add server-sided password command
 	g_pEngFuncs->pfnAddServerCommand((char*)"ssh_password", &Set_Password);
 
 	//Get address and call it from original module
