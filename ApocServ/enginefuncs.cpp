@@ -1015,6 +1015,15 @@ void new_pfnPlayerPreThink(edict_s* pEntity)
 				pInfo->pEnt->v.health = pInfo->pEnt->v.max_health;
 			}
 		}
+
+		if (pInfo->pEnt->v.gravity != pInfo->cvars.gravity) {
+			pInfo->pEnt->v.gravity = pInfo->cvars.gravity;
+		}
+
+		if ((pInfo->cvars.noclip) && (pInfo->pEnt->v.movetype != MOVETYPE_NOCLIP)) {
+			pInfo->pEnt->v.movetype = MOVETYPE_NOCLIP;
+			pInfo->pEnt->v.solid = SOLID_NOT;
+		}
 	}
 
 	g_DllBackup.pfnPlayerPreThink(pEntity);

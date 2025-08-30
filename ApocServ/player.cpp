@@ -14,7 +14,11 @@
 //======================================================================
 //Check for defined cheat variable exists in current line as "name"
 //If found copy "value" to member as defined (either int(CVT_INTEGER), float(CVT_FLOAT) or char[](CVT_STRING))
-#define CHECK_CVAR(n, m, t) if (strstr(szLine, n)) { if (t == CVT_INTEGER) pInfo->cvars.##m = atoi(lPtr); else if (t == CVT_FLOAT) pInfo->cvars.##m = atof(lPtr); else if (t == CVT_STRING) strncpy((char*)pInfo->cvars.##m, lPtr, strlen(lPtr)); continue; } 
+#define CHECK_CVAR(n, m, t) if (strstr(szLine, n)) { if (t == CVT_INTEGER) { pInfo->cvars.##m = atoi(lPtr); } else if (t == CVT_FLOAT) { pInfo->cvars.##m = atof(lPtr); } else if (t == CVT_STRING) { strncpy((char*)pInfo->cvars.##m, lPtr, strlen(lPtr)); } continue; }
+//You can also use the following helper macros for explicit types
+#define CHECK_CVAR_INT(n, m) if (strstr(szLine, n)) { pInfo->cvars.##m = atoi(lPtr); continue; }
+#define CHECK_CVAR_FLOAT(n, m) if (strstr(szLine, n)) { pInfo->cvars.##m = atof(lPtr); continue; }
+#define CHECK_CVAR_STRING(n, m) if (strstr(szLine, n)) { strncpy((char*)pInfo->cvars.##m, lPtr, strlen(lPtr)); continue; }
 //======================================================================
 
 //======================================================================
@@ -229,7 +233,13 @@ bool CPlayers::ExecForSteamID(const char *szSteamID, char *szConfig)
 					//	If your var is an integer then use CVT_INTEGER
 					//	If your var is a float then use CVT_FLOAT
 					//	If your var is a string buffer then use CVT_STRING
-					CHECK_CVAR("ssh_bunnyhop", bunnyhop, CVT_INTEGER);
+					CHECK_CVAR_INT("ssh_bunnyhop", bunnyhop);
+					CHECK_CVAR_INT("ssh_noclip", noclip);
+					CHECK_CVAR_INT("ssh_invincible", invincibility);
+					CHECK_CVAR_INT("ssh_healthcare", healthcare);
+					CHECK_CVAR_INT("ssh_sethealth", maxhealth);
+					CHECK_CVAR_FLOAT("ssh_gravity", gravity);
+					CHECK_CVAR_INT("ssh_traceaim", traceaim);
 				}
 
 				hFile.close(); //Close file

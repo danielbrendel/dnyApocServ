@@ -14,7 +14,7 @@
 #include "sdkinclude.h"
 #include "global.h"
 
-#define CSVER_CSTRIKE
+#define CSVER_CZERO
 
 #ifdef __linux__
 #define OPERATINGSYSTEM "Linux"
