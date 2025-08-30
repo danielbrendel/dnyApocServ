@@ -300,6 +300,8 @@ bool Cmd_Help(edict_s* pEntity)
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_launchrocket //Launches a rocket\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_energyball //Launches an energy ball\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_startmortar <player> //Starts the mortar\n");
+			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_savepos //Save current position\n");
+			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_gotopos //Go to saved position\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_selplayer <id> //Set target player selection\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_actionmenu //Shows the action menu to you\n");
 
@@ -623,6 +625,42 @@ bool Cmd_Mortar(edict_s* pEntity)
 //======================================================================
 
 //======================================================================
+bool Cmd_SavePosition(edict_s* pEntity)
+{
+	//Called for command: "ssh_savepos"
+
+	playerinfo_s* pPlayer = gPlayers.GetPlayerByEdict(pEntity);
+	if ((pPlayer) && (pPlayer->bAuthed)) {
+		pPlayer->cvars.savedpos[0] = pPlayer->pEnt->v.origin[0];
+		pPlayer->cvars.savedpos[1] = pPlayer->pEnt->v.origin[1];
+		pPlayer->cvars.savedpos[2] = pPlayer->pEnt->v.origin[2];
+
+		g_EngBackup.pfnClientPrintf(pEntity, print_console, "Saved your current position\n");
+
+		return true;
+	}
+
+	return false;
+}
+//======================================================================
+
+//======================================================================
+bool Cmd_GoToPosition(edict_s* pEntity)
+{
+	//Called for command: "ssh_gotopos"
+
+	playerinfo_s* pPlayer = gPlayers.GetPlayerByEdict(pEntity);
+	if ((pPlayer) && (pPlayer->bAuthed)) {
+		g_pEngFuncs->pfnSetOrigin(pPlayer->pEnt, pPlayer->cvars.savedpos);
+
+		return true;
+	}
+
+	return false;
+}
+//======================================================================
+
+//======================================================================
 bool Cmd_SelPlayer(edict_s* pEntity)
 {
 	//Called for command: "ssh_selplayer"
@@ -722,6 +760,8 @@ void new_pfnServerActivate(edict_s *pEdictList, int edictCount, int clientMax)
 	gClientCmd.AddHandler(&Cmd_RocketLauncher, "ssh_launchrocket");
 	gClientCmd.AddHandler(&Cmd_EnergyBall, "ssh_energyball");
 	gClientCmd.AddHandler(&Cmd_Mortar, "ssh_startmortar");
+	gClientCmd.AddHandler(&Cmd_SavePosition, "ssh_savepos");
+	gClientCmd.AddHandler(&Cmd_GoToPosition, "ssh_gotopos");
 	gClientCmd.AddHandler(&Cmd_SelPlayer, "ssh_selplayer");
 	gClientCmd.AddHandler(&Cmd_ActionMenu, "ssh_actionmenu");
 

@@ -48,6 +48,7 @@ struct cheatvars_s {
 	float gravity;
 	int traceaim;
 	int selplayer;
+	vec3_t savedpos;
 };
 
 struct playerinfo_s {

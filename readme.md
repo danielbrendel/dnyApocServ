@@ -20,6 +20,7 @@ This is a server-side hack for GoldSrc CS/CZ, based on the SSHBase. It works bot
 - Rocket launcher
 - Energy Ball
 - Mortar
+- Save/Restore position
 - Action menu
 	- Slap player
 	- Blind player
