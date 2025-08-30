@@ -18,6 +18,7 @@ This is a server-side hack for GoldSrc CS/CZ, based on the SSHBase. It works bot
 - Hostage spawner
 - Trace-aim
 - Rocket launcher
+- Energy Ball
 - Mortar
 - Action menu
 	- Slap player

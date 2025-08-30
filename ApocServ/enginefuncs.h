@@ -37,6 +37,10 @@
 #define ZMODULE "cstrike\\dlls\\zbotcz.dll"
 #endif
 
+#if !defined(CSVER_CSTRIKE) && !defined(CSVER_CZERO)
+#error "You need to define either CSVER_CSTRIKE or CSVER_CZERO"
+#endif
+
 //======================================================================
 typedef int (ENTAPI *T_GetEntityAPI)(DLL_FUNCTIONS* pFunctionTable, int interfaceVersion);
 typedef int (NEWAPI *T_GetNewDLLFunctions)(NEW_DLL_FUNCTIONS* pNewFunctionTable, int* pinterfaceVersion);

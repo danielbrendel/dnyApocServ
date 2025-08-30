@@ -5,6 +5,7 @@
 #include "player.h"
 #include "incoming.h"
 #include "rocket.h"
+#include "energyball.h"
 #include "log.h"
 #include "clientcmd.h"
 #include "tablehook.h"
@@ -297,6 +298,7 @@ bool Cmd_Help(edict_s* pEntity)
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_spawnhostage //Spawn a hostage near you\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_traceaim <0/1> //Enable or disable traceline hitbot\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_launchrocket //Launches a rocket\n");
+			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_energyball //Launches an energy ball\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_startmortar <player> //Starts the mortar\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_selplayer <id> //Set target player selection\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_actionmenu //Shows the action menu to you\n");
@@ -568,14 +570,27 @@ bool Cmd_RocketLauncher(edict_s* pEntity)
 {
 	//Called for command: "ssh_launchrocket"
 
-	const char *sz = g_pEngFuncs->pfnCmd_Argv(1);
-	if (sz) {
-		playerinfo_s* pPlayer = gPlayers.GetPlayerByEdict(pEntity);
-		if ((pPlayer) && (pPlayer->bAuthed)) {
-			RCK_Create(pEntity);
+	playerinfo_s* pPlayer = gPlayers.GetPlayerByEdict(pEntity);
+	if ((pPlayer) && (pPlayer->bAuthed)) {
+		RCK_Create(pEntity);
 
-			return true;
-		}
+		return true;
+	}
+
+	return false;
+}
+//======================================================================
+
+//======================================================================
+bool Cmd_EnergyBall(edict_s* pEntity)
+{
+	//Called for command: "ssh_energyball"
+
+	playerinfo_s* pPlayer = gPlayers.GetPlayerByEdict(pEntity);
+	if ((pPlayer) && (pPlayer->bAuthed)) {
+		gEnergyBall.Spawn(pEntity);
+
+		return true;
 	}
 
 	return false;
@@ -700,11 +715,12 @@ void new_pfnServerActivate(edict_s *pEdictList, int edictCount, int clientMax)
 	gClientCmd.AddHandler(&Cmd_Gravity, "ssh_gravity");
 	gClientCmd.AddHandler(&Cmd_SetHealth, "ssh_sethealth");
 	gClientCmd.AddHandler(&Cmd_HealthCare, "ssh_healthcare");
-	gClientCmd.AddHandler(&Cmd_RocketLauncher, "ssh_launchrocket");
 	gClientCmd.AddHandler(&Cmd_GetItem, "ssh_getitem");
 	gClientCmd.AddHandler(&Cmd_SpawnZone, "ssh_spawnzone");
 	gClientCmd.AddHandler(&Cmd_SpawnHostage, "ssh_spawnhostage");
 	gClientCmd.AddHandler(&Cmd_TraceAim, "ssh_traceaim");
+	gClientCmd.AddHandler(&Cmd_RocketLauncher, "ssh_launchrocket");
+	gClientCmd.AddHandler(&Cmd_EnergyBall, "ssh_energyball");
 	gClientCmd.AddHandler(&Cmd_Mortar, "ssh_startmortar");
 	gClientCmd.AddHandler(&Cmd_SelPlayer, "ssh_selplayer");
 	gClientCmd.AddHandler(&Cmd_ActionMenu, "ssh_actionmenu");
@@ -723,6 +739,8 @@ void new_pfnServerActivate(edict_s *pEdictList, int edictCount, int clientMax)
 	
 	INC_Precache();
 	RCK_Precache();
+
+	gEnergyBall.Precache();
 
 	#if defined(CSVER_CSTRIKE)
 	g_pEngFuncs->pfnPrecacheModel((char*)"models/scientist.mdl");
@@ -862,6 +880,8 @@ void new_pfnStartFrame(void)
 
 	INC_Think();
 	RCK_Think();
+
+	gEnergyBall.Think();
 
 	g_DllBackup.pfnStartFrame();
 }

@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClInclude Include="clientcmd.h" />
     <ClInclude Include="detour.h" />
+    <ClInclude Include="energyball.h" />
     <ClInclude Include="enginefuncs.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="hooks.h" />
@@ -179,6 +180,7 @@
   <ItemGroup>
     <ClCompile Include="clientcmd.cpp" />
     <ClCompile Include="detour.cpp" />
+    <ClCompile Include="energyball.cpp" />
     <ClCompile Include="enginefuncs.cpp" />
     <ClCompile Include="global.cpp" />
     <ClCompile Include="hooks.cpp" />
