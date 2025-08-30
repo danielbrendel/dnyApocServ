@@ -14,9 +14,11 @@
 #include "sdkinclude.h"
 #include "global.h"
 
+#define CSVER_CZERO
+
 #ifdef __linux__
 #define OPERATINGSYSTEM "Linux"
-#define SSH_CONFIG "cstrike/dlls/dnyApocServ.cfg"
+#define SSH_CONFIG "cstrike/dlls/ApocServ.cfg"
 #define EXPORT_LIBRARY extern "C"
 #define FNPAPI
 #define ENTAPI
@@ -25,7 +27,7 @@
 #define LMODULE "cstrike/dlls/cs_i386.so"
 #elif _WIN32
 #define OPERATINGSYSTEM "Win32"
-#define SSH_CONFIG "cstrike\\dlls\\dnyApocServ.cfg"
+#define SSH_CONFIG "cstrike\\dlls\\ApocServ.cfg"
 #define EXPORT_LIBRARY
 #define FNPAPI __stdcall
 #define ENTAPI __cdecl

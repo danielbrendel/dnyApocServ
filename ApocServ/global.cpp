@@ -296,9 +296,32 @@ bool SpawnZone(const char* szZoneName, float* pos)
 //======================================================================
 
 //======================================================================
+edict_s* SpawnEntity(const char* szClassName, float* pos)
+{
+	//Spawn an entity
+
+	if ((szClassName) && (pos)) {
+		int ialloc = g_pEngFuncs->pfnAllocString(szClassName); //Allocate entity string
+		if (ialloc) {
+			edict_s* pEntity = g_pEngFuncs->pfnCreateNamedEntity(ialloc); //Create the entity by name
+			if (pEntity) {
+				g_pDllFuncs->pfnSpawn(pEntity); //Spawn item to world
+				g_pEngFuncs->pfnSetOrigin(pEntity, pos); //Set desired position
+
+				return pEntity;
+			}
+		}
+	}
+
+	return NULL;
+}
+//======================================================================
+
+//======================================================================
 void SetPlayerGlow(edict_s* pEdict, float ramt, float fr, float fg, float fb)
 {
 	//Create a glow around a player
+
 	if (pEdict) {
 		pEdict->v.renderfx = kRenderFxGlowShell; //Glow constant
 		pEdict->v.renderamt = ramt; //The glows thickness

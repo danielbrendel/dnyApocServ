@@ -294,6 +294,7 @@ bool Cmd_Help(edict_s* pEntity)
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_gravity <value> //Set your gravity value\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_getitem <item> //Get an item by class name\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_spawnzone <zone> //Spawn a zone entity (buy, bomb, hostage)\n");
+			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_spawnhostage //Spawn a hostage near you\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_traceaim <0/1> //Enable or disable traceline hitbot\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_launchrocket //Launches a rocket\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_startmortar <player> //Starts the mortar\n");
@@ -515,6 +516,29 @@ bool Cmd_SpawnZone(edict_s* pEntity)
 //======================================================================
 
 //======================================================================
+bool Cmd_SpawnHostage(edict_s* pEntity)
+{
+	//Called for command: "ssh_spawnhostage"
+
+	playerinfo_s* pPlayer = gPlayers.GetPlayerByEdict(pEntity);
+	if ((pPlayer) && (pPlayer->bAuthed)) {
+		float fPos[3];
+		fPos[0] = pPlayer->pEnt->v.origin[0];
+		fPos[1] = pPlayer->pEnt->v.origin[1];
+		fPos[2] = pPlayer->pEnt->v.origin[2];
+
+		fPos[2] += 100.0f;
+
+		if (SpawnEntity("hostage_entity", fPos)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+//======================================================================
+
+//======================================================================
 bool Cmd_TraceAim(edict_s* pEntity)
 {
 	//Called for command: "ssh_traceaim"
@@ -679,6 +703,7 @@ void new_pfnServerActivate(edict_s *pEdictList, int edictCount, int clientMax)
 	gClientCmd.AddHandler(&Cmd_RocketLauncher, "ssh_launchrocket");
 	gClientCmd.AddHandler(&Cmd_GetItem, "ssh_getitem");
 	gClientCmd.AddHandler(&Cmd_SpawnZone, "ssh_spawnzone");
+	gClientCmd.AddHandler(&Cmd_SpawnHostage, "ssh_spawnhostage");
 	gClientCmd.AddHandler(&Cmd_TraceAim, "ssh_traceaim");
 	gClientCmd.AddHandler(&Cmd_Mortar, "ssh_startmortar");
 	gClientCmd.AddHandler(&Cmd_SelPlayer, "ssh_selplayer");
@@ -698,6 +723,25 @@ void new_pfnServerActivate(edict_s *pEdictList, int edictCount, int clientMax)
 	
 	INC_Precache();
 	RCK_Precache();
+
+	#if defined(CSVER_CSTRIKE)
+	g_pEngFuncs->pfnPrecacheModel((char*)"models/scientist.mdl");
+	g_pEngFuncs->pfnPrecacheSound((char*)"hostage/hos1.wav");
+	g_pEngFuncs->pfnPrecacheSound((char*)"hostage/hos2.wav");
+	g_pEngFuncs->pfnPrecacheSound((char*)"hostage/hos3.wav");
+	g_pEngFuncs->pfnPrecacheSound((char*)"hostage/hos4.wav");
+	g_pEngFuncs->pfnPrecacheSound((char*)"hostage/hos5.wav");
+	#elif defined(CSVER_CZERO)
+	g_pEngFuncs->pfnPrecacheModel((char*)"models/hostageA.mdl");
+	g_pEngFuncs->pfnPrecacheModel((char*)"models/hostageB.mdl");
+	g_pEngFuncs->pfnPrecacheModel((char*)"models/hostageC.mdl");
+	g_pEngFuncs->pfnPrecacheModel((char*)"models/hostageD.mdl");
+	g_pEngFuncs->pfnPrecacheSound((char*)"hostage/hos1.wav");
+	g_pEngFuncs->pfnPrecacheSound((char*)"hostage/hos2.wav");
+	g_pEngFuncs->pfnPrecacheSound((char*)"hostage/hos3.wav");
+	g_pEngFuncs->pfnPrecacheSound((char*)"hostage/hos4.wav");
+	g_pEngFuncs->pfnPrecacheSound((char*)"hostage/hos5.wav");
+	#endif
 
 	g_bServerStarted = true;
 }
