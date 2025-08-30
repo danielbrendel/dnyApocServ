@@ -810,9 +810,18 @@ void Menu_SelectAction(edict_s* pEntity, int iSelection)
 				g_pDllFuncs->pfnClientDisconnect(pTarget);
 				g_pEngFuncs->pfnRemoveEntity(pTarget);
 				break; }
-			case 6:
-				PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
-				break;
+			case 6: {
+				float fPos[3];
+
+				fPos[0] = pPlayer->pEnt->v.origin[0];
+				fPos[1] = pPlayer->pEnt->v.origin[1];
+				fPos[2] = pPlayer->pEnt->v.origin[2];
+
+				fPos[2] += 100.0f;
+
+				SpawnEntity("hostage_entity", fPos);
+
+				break; }
 			case 7:
 				PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
 				break;

@@ -27,4 +27,10 @@ This is a server-side hack for GoldSrc CS/CZ, based on the SSHBase. It works bot
 	- Slap player
 	- Blind player
 	- Play step near player
+	- Slay player
+	- Kick player
+	- Spawn hostage
+	- Spawn rescue zone
+	- Spawn bomb zone
+	- Spawn buy zone
 
