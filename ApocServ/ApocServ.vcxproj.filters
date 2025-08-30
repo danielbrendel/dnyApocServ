@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Quelldateien">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Headerdateien">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Ressourcendateien">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Headerdateien\sdk">
+      <UniqueIdentifier>{c32af5a2-fafd-4e26-ba98-39dcbbe43da6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="clientcmd.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="detour.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="enginefuncs.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="incoming.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="log.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="menu.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="rocket.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="sdkinclude.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="tablehook.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="usermsgs.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\activity.h">
+      <Filter>Headerdateien\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\basemonster.h">
+      <Filter>Headerdateien\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\cdll_dll.h">
+      <Filter>Headerdateien\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\const.h">
+      <Filter>Headerdateien\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\crc.h">
+      <Filter>Headerdateien\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\custom.h">
+      <Filter>Headerdateien\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\cvardef.h">
+      <Filter>Headerdateien\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\edict.h">
+      <Filter>Headerdateien\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\eiface.h">
+      <Filter>Headerdateien\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\enginecallback.h">
+      <Filter>Headerdateien\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\event_flags.h">
+      <Filter>Headerdateien\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\extdll.h">
+      <Filter>Headerdateien\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\in_buttons.h">
+      <Filter>Headerdateien\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\mathlib.h">
+      <Filter>Headerdateien\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\monsterevent.h">
+      <Filter>Headerdateien\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\progdefs.h">
+      <Filter>Headerdateien\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\saverestore.h">
+      <Filter>Headerdateien\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\usercmd.h">
+      <Filter>Headerdateien\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\util.h">
+      <Filter>Headerdateien\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\vector.h">
+      <Filter>Headerdateien\sdk</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="clientcmd.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="detour.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="enginefuncs.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="global.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="hooks.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="incoming.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="log.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="menu.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="rocket.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="tablehook.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="usermsgs.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

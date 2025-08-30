@@ -1,0 +1,6 @@
+LIBRARY ApocServ
+EXPORTS
+	DllMain @ 1
+	GiveFnptrsToDll @ 2
+	GetEntityAPI @ 3
+	GetNewDLLFunctions @ 4
