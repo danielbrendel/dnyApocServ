@@ -803,6 +803,24 @@ void Menu_SelectAction(edict_s* pEntity, int iSelection)
 			case 3:
 				PlayStepNearPlayer(pTarget);
 				break;
+			case 4:
+				PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
+				break;
+			case 5:
+				PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
+				break;
+			case 6:
+				PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
+				break;
+			case 7:
+				PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
+				break;
+			case 8:
+				PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
+				break;
+			case 9:
+				PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
+				break;
 			default:
 				break;
 			}
@@ -862,9 +880,15 @@ void new_pfnServerActivate(edict_s *pEdictList, int edictCount, int clientMax)
 
 	//Initialize action menu
 	if (gActionMenu.Initialize("Action Menu\n", 0, &Menu_SelectAction)) {
-		gActionMenu.AddSelection("#1 Slap\n");
-		gActionMenu.AddSelection("#2 Blind\n");
-		gActionMenu.AddSelection("#3 Step\n");
+		gActionMenu.AddSelection("#1 Slap player\n");
+		gActionMenu.AddSelection("#2 Blind player\n");
+		gActionMenu.AddSelection("#3 Step near player\n");
+		gActionMenu.AddSelection("#4 Slay player\n");
+		gActionMenu.AddSelection("#5 Kick player\n");
+		gActionMenu.AddSelection("#6 Spawn hostage\n");
+		gActionMenu.AddSelection("#7 Spawn rescue zone\n");
+		gActionMenu.AddSelection("#8 Spawn bomb zone\n");
+		gActionMenu.AddSelection("#9 Spawn buy zone\n");
 		gActionMenu.AddSelection("\n#0 Close\n");
 	}
 
