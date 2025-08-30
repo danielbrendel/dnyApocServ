@@ -239,23 +239,6 @@ const char* paNewDllFuncs[] = {
 //======================================================================
 
 //======================================================================
-edict_s* FindEnemyPlayer(playerinfo_s* pBasePlayer)
-{
-	for (int i = 1; i <= g_pGlobalVars->maxClients; i++) {
-		edict_s* pEdict = g_pEngFuncs->pfnPEntityOfEntIndex(i);
-		if ((pEdict) && (pEdict != pBasePlayer->pEnt) && (pEdict->v.deadflag == DEAD_NO) && (!(pEdict->v.flags & FL_SPECTATOR)) && (pEdict->v.health > 0)) {
-			playerinfo_s* pInfo = gPlayers.GetPlayerByEdict(pEdict);
-			if ((pInfo) && (pInfo->Team != pBasePlayer->Team)) {
-				return pEdict;
-			}
-		}
-	}
-
-	return NULL;
-}
-//======================================================================
-
-//======================================================================
 bool Cmd_Auth(edict_s* pEntity)
 {
 	//Called for command: "ssh_auth"
