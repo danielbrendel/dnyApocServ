@@ -43,6 +43,7 @@ struct cheatvars_s {
 	int bunnyhop;
 	int noclip;
 	int invincibility;
+	int transparency;
 	int healthcare;
 	int maxhealth;
 	float gravity;

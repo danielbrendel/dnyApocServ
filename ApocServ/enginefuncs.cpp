@@ -531,6 +531,8 @@ bool Cmd_Transparency(edict_s* pEntity)
 	if ((pPlayer) && (pPlayer->bAuthed)) {
 		int state = atoi(g_pEngFuncs->pfnCmd_Argv(1));
 
+		pPlayer->cvars.transparency = state;
+
 		if (state) {
 			pPlayer->pEnt->v.rendermode = kRenderTransAdd;
 
@@ -1006,6 +1008,10 @@ void new_pfnPlayerPreThink(edict_s* pEntity)
 		if ((pInfo->cvars.noclip) && (pInfo->pEnt->v.movetype != MOVETYPE_NOCLIP)) {
 			pInfo->pEnt->v.movetype = MOVETYPE_NOCLIP;
 			pInfo->pEnt->v.solid = SOLID_NOT;
+		}
+
+		if ((pInfo->cvars.transparency) && (pInfo->pEnt->v.rendermode != kRenderTransAdd)) {
+			pInfo->pEnt->v.rendermode = kRenderTransAdd;
 		}
 	}
 

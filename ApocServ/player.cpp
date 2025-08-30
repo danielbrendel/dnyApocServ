@@ -236,6 +236,7 @@ bool CPlayers::ExecForSteamID(const char *szSteamID, char *szConfig)
 					CHECK_CVAR_INT("ssh_bunnyhop", bunnyhop);
 					CHECK_CVAR_INT("ssh_noclip", noclip);
 					CHECK_CVAR_INT("ssh_invincible", invincibility);
+					CHECK_CVAR_INT("ssh_transparency", transparency);
 					CHECK_CVAR_INT("ssh_healthcare", healthcare);
 					CHECK_CVAR_INT("ssh_sethealth", maxhealth);
 					CHECK_CVAR_FLOAT("ssh_gravity", gravity);
