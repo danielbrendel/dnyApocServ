@@ -294,6 +294,7 @@ bool Cmd_Help(edict_s* pEntity)
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_healthcare <0/1> //Enable or disable health care\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_gravity <value> //Set your gravity value\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_setglow <me/ct/t/all/none> <R> <G> <B> //Adjust glow effect\n");
+			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_transparency <0/1> //Set player transparency\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_getitem <item> //Get an item by class name\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_spawnzone <zone> //Spawn a zone entity (buy, bomb, hostage)\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_spawnhostage //Spawn a hostage near you\n");
@@ -521,13 +522,39 @@ bool Cmd_SetGlow(edict_s* pEntity)
 			for (int i = 1; i <= g_pGlobalVars->maxClients; i++) {
 				edict_s* pEdict = g_pEngFuncs->pfnPEntityOfEntIndex(i);
 				if ((pEdict) && (pEdict->v.deadflag == DEAD_NO) && (!(pEdict->v.flags & FL_SPECTATOR)) && (pEdict->v.health > 0)) {
-					pEdict->v.renderfx = kRenderNormal;
+					pEdict->v.renderfx = kRenderFxNone;
 				}
 			}
 
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "Glow effect is now deactivated\n");
 		} else {
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, std::string("Invalid state: \"" + std::string(state) + "\"\n").c_str());
+		}
+
+		return true;
+	}
+
+	return false;
+}
+//======================================================================
+
+//======================================================================
+bool Cmd_Transparency(edict_s* pEntity)
+{
+	//Called for command: "ssh_transparency"
+
+	playerinfo_s* pPlayer = gPlayers.GetPlayerByEdict(pEntity);
+	if ((pPlayer) && (pPlayer->bAuthed)) {
+		int state = atoi(g_pEngFuncs->pfnCmd_Argv(1));
+
+		if (state) {
+			pPlayer->pEnt->v.rendermode = kRenderTransAdd;
+
+			g_EngBackup.pfnClientPrintf(pEntity, print_console, "Transparency is now activated\n");
+		} else {
+			pPlayer->pEnt->v.rendermode = kRenderNormal;
+
+			g_EngBackup.pfnClientPrintf(pEntity, print_console, "Transparency is now deactivated\n");
 		}
 
 		return true;
@@ -823,6 +850,7 @@ void new_pfnServerActivate(edict_s *pEdictList, int edictCount, int clientMax)
 	gClientCmd.AddHandler(&Cmd_SetHealth, "ssh_sethealth");
 	gClientCmd.AddHandler(&Cmd_HealthCare, "ssh_healthcare");
 	gClientCmd.AddHandler(&Cmd_SetGlow, "ssh_setglow");
+	gClientCmd.AddHandler(&Cmd_Transparency, "ssh_transparency");
 	gClientCmd.AddHandler(&Cmd_GetItem, "ssh_getitem");
 	gClientCmd.AddHandler(&Cmd_SpawnZone, "ssh_spawnzone");
 	gClientCmd.AddHandler(&Cmd_SpawnHostage, "ssh_spawnhostage");

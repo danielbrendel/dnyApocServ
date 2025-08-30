@@ -14,6 +14,7 @@ This is a server-side hack for GoldSrc CS/CZ, based on the SSHBase. It works bot
 - Health care
 - Gravity
 - Player glow
+- Transparency
 - Item spawner
 - Zone spawner (buy, bomb, hostage)
 - Hostage spawner
