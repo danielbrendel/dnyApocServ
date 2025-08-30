@@ -806,9 +806,10 @@ void Menu_SelectAction(edict_s* pEntity, int iSelection)
 			case 4:
 				g_pDllFuncs->pfnClientKill(pTarget);
 				break;
-			case 5:
-				PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
-				break;
+			case 5: {
+				g_pDllFuncs->pfnClientDisconnect(pTarget);
+				g_pEngFuncs->pfnRemoveEntity(pTarget);
+				break; }
 			case 6:
 				PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
 				break;
