@@ -1,5 +1,4 @@
 <h1 align="center">
-    <img src="public/img/logo.png" width="256"/><br/>
     Apocalypse Server
 </h1>
 
@@ -21,6 +20,9 @@
 	</a>
 	<a href="assets/screenshot-rockets.jpg">
 		<img src="assets/screenshot-rockets.jpg" alt="screenshot-rockets" width="350"/>
+	</a>
+	<a href="assets/screenshot-energyball.jpg">
+		<img src="assets/screenshot-energyball.jpg" alt="screenshot-energyball" width="350"/>
 	</a>
 </p>
 
