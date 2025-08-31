@@ -9,14 +9,16 @@
 </p>
 
 <p align="center">
-    <img src="https://img.shields.io/badge/lang-cpp-green" alt="lang-cpp"/>
-    <img src="https://img.shields.io/badge/engine-goldsrc-orange" alt="engine-goldsrc"/>
-    <img src="https://img.shields.io/badge/mods-cs/cz-violet" alt="mods-cs/cz"/>
+    <img src="https://img.shields.io/badge/lang-C++-green" alt="lang-c++"/>
+    <img src="https://img.shields.io/badge/engine-GoldSrc-orange" alt="engine-goldsrc"/>
+    <img src="https://img.shields.io/badge/mods-CS/CZ-violet" alt="mods-cs/cz"/>
 	<img src="https://img.shields.io/badge/license-MIT-blue" alt="license-mit"/>
 </p>
 
 <p align="center">
-    <img src=""/>
+    <a href="assets/screenshot-console.jpg">
+		<img src="assets/screenshot-console.jpg" alt="screenshot-console" width="350"/>
+	</a>
 </p>
 
 ## Author
@@ -26,7 +28,7 @@ __Contact__: dbrendel1988(at)gmail(dot)com\
 __GitHub__: https://github.com/danielbrendel
 
 ## Description
-This is a server-side hack for GoldSrc CS/CZ, based on the <a href="https://github.com/danielbrendel/dnySSHBase">SSHBase</a>. It works both with Counter-Strike 1.6 and Condition Zero, including ZBots. It can be built for Windows and Linux. 
+This project is a server-side hack for GoldSrc Counter-Strike, based on the <a href="https://github.com/danielbrendel/dnySSHBase">SSHBase</a>. It works both with Counter-Strike 1.6 and Condition Zero, including ZBots. It can be built for Windows and Linux. 
 
 ## Disclaimer
 
