@@ -26,7 +26,7 @@ __Contact__: dbrendel1988(at)gmail(dot)com\
 __GitHub__: https://github.com/danielbrendel
 
 ## Description
-This is a server-side hack for GoldSrc CS/CZ, based on the SSHBase. It works both with Counter-Strike 1.6 and Condition Zero, including ZBots. It can be built for Windows and Linux. 
+This is a server-side hack for GoldSrc CS/CZ, based on the <a href="https://github.com/danielbrendel/dnySSHBase">SSHBase</a>. It works both with Counter-Strike 1.6 and Condition Zero, including ZBots. It can be built for Windows and Linux. 
 
 ## Features:
 - Bunnyhop
