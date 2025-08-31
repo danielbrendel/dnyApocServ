@@ -4,7 +4,7 @@
 	ApocServ Server-side Hack for GoldSrc CS/CZ
 	Developed by Daniel Brendel
 
-	! See readme.md file for more details !
+	! See README.md file for more details !
 
 	File: tablehook.cpp
 	Purpose: Table Hook class implementation

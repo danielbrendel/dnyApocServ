@@ -15,14 +15,17 @@
 </p>
 
 <p align="center">
-    <a href="assets/screenshot-console.jpg">
-		<img src="assets/screenshot-console.jpg" alt="screenshot-console" width="350"/>
+    <a href="Assets/screenshot-console.jpg">
+		<img src="Assets/screenshot-console.jpg" alt="screenshot-console" width="350"/>
 	</a>
-	<a href="assets/screenshot-rockets.jpg">
-		<img src="assets/screenshot-rockets.jpg" alt="screenshot-rockets" width="350"/>
+	<a href="Assets/screenshot-menu-weapons-glow.jpg">
+		<img src="Assets/screenshot-menu-weapons-glow.jpg" alt="screenshot-menu-weapons-glow" width="350"/>
 	</a>
-	<a href="assets/screenshot-energyball.jpg">
-		<img src="assets/screenshot-energyball.jpg" alt="screenshot-energyball" width="350"/>
+	<a href="Assets/screenshot-eb-and-rocket.jpg">
+		<img src="Assets/screenshot-eb-and-rocket.jpg" alt="screenshot-eb-and-rocket" width="350"/>
+	</a>
+	<a href="Assets/screenshot-buyzone-hostages-weapons.jpg">
+		<img src="Assets/screenshot-buyzone-hostages-weapons.jpg" alt="screenshot-buyzone-hostages-weapons" width="350"/>
 	</a>
 </p>
 

@@ -5,7 +5,7 @@
 	ApocServ Server-side Hack for GoldSrc CS/CZ
 	Developed by Daniel Brendel
 
-	! See readme.md file for more details !
+	! See README.md file for more details !
 
 	File: incoming.h
 	Purpose: Mortar interface
@@ -17,16 +17,6 @@
 #ifdef __WIN32__
 #include <windows.h>
 #endif
-
-/*
-	ApocServ Server-side Hack for GoldSrc CS/CZ
-	Developed by Daniel Brendel
-
-	! See readme.md file for more details !
-
-	File: incoming.h
-	Purpose: Mortar interface
-*/
 
 //======================================================================
 #define MAX_XRAND 100 //The difference of the x position (+, -)
