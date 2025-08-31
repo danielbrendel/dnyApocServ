@@ -840,13 +840,13 @@ void Menu_SelectAction(edict_s* pEntity, int iSelection)
 
 			break; }
 		case 7:
-			PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
+			SpawnZone("func_hostage_rescue", pPlayer->pEnt->v.origin);
 			break;
 		case 8:
-			PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
+			SpawnZone("func_bomb_target", pPlayer->pEnt->v.origin);
 			break;
 		case 9:
-			PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
+			SpawnZone("func_buyzone", pPlayer->pEnt->v.origin);
 			break;
 		default:
 			break;
