@@ -288,7 +288,6 @@ bool Cmd_Help(edict_s* pEntity)
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_startmortar <player> //Starts the mortar\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_savepos //Save current position\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_gotopos //Go to saved position\n");
-			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_selplayer <id> //Set target player selection\n");
 			g_EngBackup.pfnClientPrintf(pEntity, print_console, "ssh_actionmenu //Shows the action menu to you\n");
 
 			return true;
@@ -743,27 +742,6 @@ bool Cmd_GoToPosition(edict_s* pEntity)
 //======================================================================
 
 //======================================================================
-bool Cmd_SelPlayer(edict_s* pEntity)
-{
-	//Called for command: "ssh_selplayer"
-
-	const char* sz = g_pEngFuncs->pfnCmd_Argv(1);
-	if (sz) {
-		playerinfo_s* pPlayer = gPlayers.GetPlayerByEdict(pEntity);
-		if ((pPlayer) && (pPlayer->bAuthed)) {
-			pPlayer->cvars.selplayer = atoi(sz);
-
-			g_EngBackup.pfnClientPrintf(pEntity, print_console, std::string("Selected target player #" + std::to_string(pPlayer->cvars.selplayer) + "\n").c_str());
-
-			return true;
-		}
-	}
-
-	return false;
-}
-//======================================================================
-
-//======================================================================
 bool Cmd_ActionMenu(edict_s* pEntity)
 {
 	//Called for command: "ssh_actionmenu"
@@ -785,15 +763,15 @@ bool Cmd_ActionMenu(edict_s* pEntity)
 //======================================================================
 
 //======================================================================
-void Menu_SelectAction(edict_s* pEntity, int iSelection)
+void Menu_SelectPlayer(edict_s* pEntity, int iSelection)
 {
 	//Handle menu selection of player that has selected a menu entry
-
+	
 	playerinfo_s* pPlayer = gPlayers.GetPlayerByEdict(pEntity);
-	if ((pPlayer) && (pPlayer->bAuthed) && (pPlayer->cvars.selplayer > 0)) {
-		edict_s* pTarget = g_pEngFuncs->pfnPEntityOfEntIndex(pPlayer->cvars.selplayer);
-		if ((pTarget) && (pTarget->v.deadflag == DEAD_NO) && (!(pTarget->v.flags & FL_SPECTATOR))) {
-			switch (iSelection) {
+	if ((pPlayer) && (pPlayer->bAuthed) && (pPlayer->cvars.selaction > 0)) {
+		edict_s* pTarget = g_pEngFuncs->pfnPEntityOfEntIndex(iSelection);
+		if ((pTarget) && (!(pTarget->v.flags & FL_SPECTATOR))) {
+			switch (pPlayer->cvars.selaction) {
 			case 1:
 				SlapPlayer(pTarget, 1);
 				break;
@@ -810,32 +788,68 @@ void Menu_SelectAction(edict_s* pEntity, int iSelection)
 				g_pDllFuncs->pfnClientDisconnect(pTarget);
 				g_pEngFuncs->pfnRemoveEntity(pTarget);
 				break; }
-			case 6: {
-				float fPos[3];
-
-				fPos[0] = pPlayer->pEnt->v.origin[0];
-				fPos[1] = pPlayer->pEnt->v.origin[1];
-				fPos[2] = pPlayer->pEnt->v.origin[2];
-
-				fPos[2] += 100.0f;
-
-				SpawnEntity("hostage_entity", fPos);
-
-				break; }
-			case 7:
-				PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
-				break;
-			case 8:
-				PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
-				break;
-			case 9:
-				PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
-				break;
-			default:
-				break;
 			}
-		} else {
-			PrintSayText(pPlayer->pEnt, "You need to select a player", NULL, NULL, NULL);
+		}
+	}
+}
+//======================================================================
+
+//======================================================================
+void Menu_SelectAction(edict_s* pEntity, int iSelection)
+{
+	//Handle menu selection of player that has selected a menu entry
+
+	playerinfo_s* pPlayer = gPlayers.GetPlayerByEdict(pEntity);
+	if ((pPlayer) && (pPlayer->bAuthed)) {
+		switch (iSelection) {
+		case 1: {
+			pPlayer->cvars.selaction = iSelection;
+			SetupPlayerMenu(&gPlayerMenu, &Menu_SelectPlayer);
+			gPlayerMenu.Show(pEntity);
+			break; }
+		case 2: {
+			pPlayer->cvars.selaction = iSelection;
+			SetupPlayerMenu(&gPlayerMenu, &Menu_SelectPlayer);
+			gPlayerMenu.Show(pEntity);
+			break; }
+		case 3: {
+			pPlayer->cvars.selaction = iSelection;
+			SetupPlayerMenu(&gPlayerMenu, &Menu_SelectPlayer);
+			gPlayerMenu.Show(pEntity);
+			break; }
+		case 4: {
+			pPlayer->cvars.selaction = iSelection;
+			SetupPlayerMenu(&gPlayerMenu, &Menu_SelectPlayer);
+			gPlayerMenu.Show(pEntity);
+			break; }
+		case 5: {
+			pPlayer->cvars.selaction = iSelection;
+			SetupPlayerMenu(&gPlayerMenu, &Menu_SelectPlayer);
+			gPlayerMenu.Show(pEntity);
+			break; }
+		case 6: {
+			float fPos[3];
+
+			fPos[0] = pPlayer->pEnt->v.origin[0];
+			fPos[1] = pPlayer->pEnt->v.origin[1];
+			fPos[2] = pPlayer->pEnt->v.origin[2];
+
+			fPos[2] += 100.0f;
+
+			SpawnEntity("hostage_entity", fPos);
+
+			break; }
+		case 7:
+			PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
+			break;
+		case 8:
+			PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
+			break;
+		case 9:
+			PrintSayText(pPlayer->pEnt, "Not implemented yet.", NULL, NULL, NULL);
+			break;
+		default:
+			break;
 		}
 	}
 }
@@ -881,7 +895,6 @@ void new_pfnServerActivate(edict_s *pEdictList, int edictCount, int clientMax)
 	gClientCmd.AddHandler(&Cmd_Mortar, "ssh_startmortar");
 	gClientCmd.AddHandler(&Cmd_SavePosition, "ssh_savepos");
 	gClientCmd.AddHandler(&Cmd_GoToPosition, "ssh_gotopos");
-	gClientCmd.AddHandler(&Cmd_SelPlayer, "ssh_selplayer");
 	gClientCmd.AddHandler(&Cmd_ActionMenu, "ssh_actionmenu");
 
 	//Clear menu if already initialized

@@ -54,5 +54,6 @@ public:
 //======================================================================
 
 extern CMenu gActionMenu;
+extern CMenu gPlayerMenu;
 
 #endif

@@ -48,7 +48,7 @@ struct cheatvars_s {
 	int maxhealth;
 	float gravity;
 	int traceaim;
-	int selplayer;
+	int selaction;
 	vec3_t savedpos;
 };
 

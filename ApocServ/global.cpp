@@ -30,6 +30,7 @@
 #include <time.h> 
 #include <fstream>
 #include <iostream>
+#include "menu.h"
 
 //======================================================================
 char g_AdminPass[250];
@@ -346,5 +347,31 @@ edict_s* FindEnemyPlayer(playerinfo_s* pBasePlayer)
 	}
 
 	return NULL;
+}
+//======================================================================
+
+//======================================================================
+void SetupPlayerMenu(CMenu* pPlayerMenu, TSelectionHandler pfnCallback)
+{
+	if (!pPlayerMenu)
+		return;
+
+	if (pPlayerMenu->IsReady())
+		pPlayerMenu->Clear();
+
+	if (pPlayerMenu->Initialize("Player Selection\n", 0, pfnCallback)) {
+		for (int i = 1; i <= g_pGlobalVars->maxClients; i++) {
+			edict_s* pEdict = g_pEngFuncs->pfnPEntityOfEntIndex(i);
+			if ((pEdict) && (!(pEdict->v.flags & FL_SPECTATOR)) && (pEdict->v.health > 0)) {
+				char* userinfo = g_pEngFuncs->pfnGetInfoKeyBuffer(pEdict);
+				if (userinfo) {
+					char* name = g_pEngFuncs->pfnInfoKeyValue(userinfo, (char*)"name");
+					if (name) {
+						pPlayerMenu->AddSelection(("#" + std::to_string(i) + " " + std::string(name) + "\n").c_str());
+					}
+				}
+			}
+		}
+	}
 }
 //======================================================================

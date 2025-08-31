@@ -25,6 +25,7 @@
 #include "sdkinclude.h"
 
 #include "player.h"
+#include "menu.h"
 
 //======================================================================
 extern void* g_hOrigModule; //Handle to original game mod library
@@ -55,6 +56,7 @@ bool SpawnZone(const char* szZoneName, float* pos);
 edict_s* SpawnEntity(const char* szClassName, float* pos);
 void SetPlayerGlow(edict_s* pEdict, float ramt, float fr, float fg, float fb);
 edict_s* FindEnemyPlayer(playerinfo_s* pBasePlayer);
+void SetupPlayerMenu(CMenu* pPlayerMenu, TSelectionHandler pfnCallback);
 //======================================================================
 
 #endif
