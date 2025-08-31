@@ -19,6 +19,9 @@
     <a href="assets/screenshot-console.jpg">
 		<img src="assets/screenshot-console.jpg" alt="screenshot-console" width="350"/>
 	</a>
+	<a href="assets/screenshot-rockets.jpg">
+		<img src="assets/screenshot-rockets.jpg" alt="screenshot-rockets" width="350"/>
+	</a>
 </p>
 
 ## Author
