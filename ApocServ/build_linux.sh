@@ -1,0 +1,1 @@
+g++ /path/to/ApocServ/*.cpp -o /path/to/ApocServ/../Release/ApocServ.so -shared -m32

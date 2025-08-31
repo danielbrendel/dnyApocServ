@@ -1,1 +1,0 @@
-g++ /home/name/Desktop/dnySSHBase/*.cpp -o /home/name/Desktop/dnySSHBase/release/dnySSHBase.so -shared -m32
