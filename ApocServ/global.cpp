@@ -319,6 +319,19 @@ edict_s* SpawnEntity(const char* szClassName, float* pos)
 //======================================================================
 
 //======================================================================
+void CalcForwardVector(float* origin, float* angle, float dist, float *out)
+{
+	vec3_t fmove;
+
+	g_EngBackup.pfnAngleVectors(angle, fmove, NULL, NULL);
+
+	out[0] = origin[0] + fmove[0] * dist;
+	out[1] = origin[1] + fmove[1] * dist;
+	out[2] = origin[2] + fmove[2] * dist;
+}
+//======================================================================
+// 
+//======================================================================
 void SetPlayerGlow(edict_s* pEdict, float ramt, float fr, float fg, float fb)
 {
 	//Create a glow around a player

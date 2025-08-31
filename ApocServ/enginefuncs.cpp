@@ -608,11 +608,8 @@ bool Cmd_SpawnHostage(edict_s* pEntity)
 	playerinfo_s* pPlayer = gPlayers.GetPlayerByEdict(pEntity);
 	if ((pPlayer) && (pPlayer->bAuthed)) {
 		float fPos[3];
-		fPos[0] = pPlayer->pEnt->v.origin[0];
-		fPos[1] = pPlayer->pEnt->v.origin[1];
-		fPos[2] = pPlayer->pEnt->v.origin[2];
 
-		fPos[2] += 100.0f;
+		CalcForwardVector(pPlayer->pEnt->v.origin, pPlayer->pEnt->v.v_angle, 100, fPos);
 
 		if (SpawnEntity("hostage_entity", fPos)) {
 			return true;
@@ -830,11 +827,7 @@ void Menu_SelectAction(edict_s* pEntity, int iSelection)
 		case 6: {
 			float fPos[3];
 
-			fPos[0] = pPlayer->pEnt->v.origin[0];
-			fPos[1] = pPlayer->pEnt->v.origin[1];
-			fPos[2] = pPlayer->pEnt->v.origin[2];
-
-			fPos[2] += 100.0f;
+			CalcForwardVector(pPlayer->pEnt->v.origin, pPlayer->pEnt->v.v_angle, 100, fPos);
 
 			SpawnEntity("hostage_entity", fPos);
 
