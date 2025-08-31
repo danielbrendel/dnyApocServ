@@ -15,7 +15,7 @@ unsigned int dwCurSnd; //Current sound timer amount.
 unsigned int dwLastSnd; //Last sound timer count.
 unsigned char bRowAmount = 0; //How often has a sound been played / explosion created ?
 		
-edict_s *pTargetEnt;
+edict_s *pTargetEnt = NULL;
 bool bStarted = false; //Is the timer started?
 //======================================================================
 
@@ -111,7 +111,7 @@ void INC_SetTarget(edict_s *p)
 {
 	//Set the target entity address.
 
-	pTargetEnt = pTargetEnt;
+	pTargetEnt = p;
 }
 //======================================================================
 
@@ -209,6 +209,7 @@ void INC_Abort(void)
 	//Aborts the timer of the incoming mortar.
 
 	bRowAmount = 0;
+	pTargetEnt = NULL;
 	bStarted = false;
 }
 //======================================================================

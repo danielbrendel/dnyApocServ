@@ -687,9 +687,9 @@ bool Cmd_Mortar(edict_s* pEntity)
 		playerinfo_s* pPlayer = gPlayers.GetPlayerByEdict(pEntity);
 		if ((pPlayer) && (pPlayer->bAuthed)) {
 			if (!INC_IsStarted()) {
-				playerinfo_s* pRemote = gPlayers.GetPlayerById(atoi(sz));
-				if ((isValidPlayer(pRemote)) && (pRemote->pEnt->v.deadflag == DEAD_NO)) {
-					INC_SetTarget(pRemote->pEnt);
+				edict_s* pTarget = g_pEngFuncs->pfnPEntityOfEntIndex(atoi(sz));
+				if ((pTarget) && (!(pTarget->v.flags & FL_SPECTATOR)) && (pTarget->v.health > 0)) {
+					INC_SetTarget(pTarget);
 					INC_Start();
 
 					return true;
@@ -944,6 +944,8 @@ void new_pfnServerDeactivate(void)
 	//Called on server deactivation
 
 	g_bServerStarted = false;
+
+	INC_Abort();
 
 	g_DllBackup.pfnServerDeactivate();
 }
